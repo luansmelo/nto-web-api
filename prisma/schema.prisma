@@ -1,0 +1,118 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Account {
+  id                  String   @id @default(uuid())
+  name                String
+  password            String
+  salt                String?  @default("")
+  premdays            Int?     @default(0)
+  lastday             Int?     @default(0)
+  email               String   @unique()
+  key                 String?  @default("")
+  blocked             Boolean? @default(false)
+  warnings            Int?     @default(0)
+  group_id            Int?     @default(1)
+  page_access         Int?
+  web_lastlogin       Int?     @default(0)
+  web_flags           Int?     @default(0)
+  email_hash          String?  @default("")
+  email_verified      Boolean? @default(false)
+  email_new           String?
+  email_new_time      Int?
+  rlname              String?
+  location            String?
+  country             String   @default("")
+  created             Int?
+  email_code          String?
+  email_next          Int?     @default(0)
+  premium_points      Int?     @default(0)
+  nickname            String?
+  avatar              String?
+  about_me            String?
+  vote                Int?     @default(0)
+  premium_points_used Int?     @default(0)
+  Player              Player[]
+
+  @@map("accounts")
+}
+
+model Player {
+  id                    String  @id @default(uuid())
+  name                  String  @unique
+  world_id              Int
+  group_id              Int     @default(1)
+  account_id            String
+  level                 Int     @default(1)
+  vocation              Int     @default(0)
+  health                Int     @default(150)
+  healthmax             Int     @default(150)
+  experience            BigInt  @default(0)
+  lookbody              Int     @default(0)
+  lookfeet              Int     @default(0)
+  lookhead              Int     @default(0)
+  looklegs              Int     @default(0)
+  looktype              Int     @default(136)
+  lookaddons            Int     @default(0)
+  lookmount             Int     @default(0)
+  maglevel              Int     @default(0)
+  mana                  Int     @default(0)
+  manamax               Int     @default(0)
+  manaspent             Int     @default(0)
+  soul                  Int     @default(0)
+  town_id               Int     @default(0)
+  posx                  Int     @default(0)
+  posy                  Int     @default(0)
+  posz                  Int     @default(0)
+  conditions            Bytes
+  cap                   Int     @default(0)
+  sex                   Int     @default(0)
+  lastlogin             BigInt  @default(0)
+  lastip                Int     @default(0)
+  save                  Boolean @default(true)
+  skull                 Int     @default(0)
+  skulltime             Int     @default(0)
+  rank_id               Int     @default(0)
+  guildnick             String  @default("")
+  lastlogout            BigInt  @default(0)
+  blessings             Int     @default(0)
+  pvp_blessing          Boolean @default(false)
+  balance               BigInt  @default(0)
+  stamina               BigInt  @default(151200000)
+  direction             Int     @default(2)
+  loss_experience       Int     @default(100)
+  loss_mana             Int     @default(100)
+  loss_skills           Int     @default(100)
+  loss_containers       Int     @default(100)
+  loss_items            Int     @default(100)
+  premend               Int     @default(0)
+  online                Boolean @default(false)
+  marriage              Int     @default(0)
+  promotion             Int     @default(0)
+  deleted               Int     @default(0)
+  description           String  @default("")
+  old_name              String?
+  hidden                Boolean @default(false)
+  worldtransfer         Int?
+  created               Int?
+  nick_verify           Int?
+  comment               String?
+  rep                   Int     @default(0)
+  ip                    String  @default("0")
+  offlinetraining_time  Int     @default(43200)
+  offlinetraining_skill Int     @default(-1)
+  broadcasting          Int     @default(0)
+  viewers               Int     @default(0)
+  account               Account @relation(fields: [account_id], references: [id])
+
+  @@map("players")
+}
