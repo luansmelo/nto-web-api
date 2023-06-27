@@ -1,7 +1,7 @@
 import { PrismaService } from 'src/modules/prisma/services/prisma.service';
 
 export class Account {
-  id: string;
+  id: number;
   name: string;
   password: string;
   salt: string;

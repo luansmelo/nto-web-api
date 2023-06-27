@@ -6,7 +6,7 @@ import * as jwt from 'jsonwebtoken';
 export class TokenService {
   constructor(private jwtService: JwtService) {}
 
-  generateAccessToken(id: string): string {
+  generateAccessToken(id: number): string {
     return this.jwtService.sign({ id });
   }
 

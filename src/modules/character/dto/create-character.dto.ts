@@ -15,7 +15,7 @@ export class CreateCharacterDto {
 
   @IsNotEmpty()
   @IsString()
-  account_id: string;
+  account_id: number;
 
   @IsOptional()
   @IsInt()

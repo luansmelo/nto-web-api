@@ -11,7 +11,7 @@ datasource db {
 }
 
 model Account {
-  id                  String   @id @default(uuid())
+  id                  Int      @id @default(autoincrement())
   name                String
   password            String
   salt                String?  @default("")
@@ -47,11 +47,11 @@ model Account {
 }
 
 model Player {
-  id                    String  @id @default(uuid())
+  id                    Int     @id @default(autoincrement())
   name                  String  @unique
   world_id              Int
   group_id              Int     @default(1)
-  account_id            String
+  account_id            Int
   level                 Int     @default(1)
   vocation              Int     @default(0)
   health                Int     @default(150)
