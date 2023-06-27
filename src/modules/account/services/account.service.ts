@@ -24,6 +24,7 @@ export class AccountService {
     await this.checkAccountExistsByNameAndEmail(data.name, data.email);
 
     const hash = crypto.createHash('sha1').update(data.password).digest('hex');
+
     await this.prisma.account.create({
       data: {
         ...data,
