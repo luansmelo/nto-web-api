@@ -18,15 +18,21 @@ export class AuthService {
   }
 
   async login(data: LoginDTO) {
-    const account = await this.account.validateUser(data.email, data.password);
+    try {
+      const account = await this.account.validateUser(
+        data.email,
+        data.password,
+      );
+      if (!account) {
+        throw new BadRequestException('Invalid email or password');
+      }
 
-    if (!account) {
-      throw new BadRequestException('Invalid email or password');
+      const token = this.token.generateAccessToken(account.id);
+
+      return { token };
+    } catch (error) {
+      console.log('ERROR', error);
     }
-
-    const token = this.token.generateAccessToken(account.id);
-
-    return { token };
   }
 
   // update(id: number, updateAuthDto: UpdateAuthDto) {
