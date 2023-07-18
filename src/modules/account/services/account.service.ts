@@ -1,16 +1,16 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/modules/prisma/services/prisma.service';
 import { AccountDTO } from '../dto/create-account.dto';
-import { LoginDTO } from '../dto/login-account.dto';
 import { UpdateAccountDto } from '../dto/update-account.dto';
 import { Account } from '../entities/account.entity';
+import * as crypto from 'crypto';
 
 @Injectable()
 export class AccountService {
   constructor(private prisma: PrismaService) {}
 
   async checkAccountExistsByNameAndEmail(name: string, email: string) {
-    const account = await this.prisma.account.findFirst({
+    const account = await this.prisma.accounts.findFirst({
       where: { OR: [{ name }, { email }] },
     });
 
@@ -22,9 +22,9 @@ export class AccountService {
   async handle(data: AccountDTO) {
     await this.checkAccountExistsByNameAndEmail(data.name, data.email);
 
-    const hash = Buffer.from(data.password).toString('base64');
+    const hash = crypto.createHash('sha1').update(data.password).digest('hex');
 
-    await this.prisma.account.create({
+    await this.prisma.accounts.create({
       data: {
         ...data,
         password: hash,
@@ -32,11 +32,14 @@ export class AccountService {
     });
   }
 
-  async validateUser(email: string, password: string): Promise<Account | null> {
-    const account = await this.prisma.account.findUnique({ where: { email } });
+  async validateUser(name: string, password: string): Promise<Account | null> {
+    const account = await this.prisma.accounts.findUnique({ where: { name } });
 
     if (account) {
-      const providedPasswordHash = Buffer.from(password, 'base64').toString();
+      const providedPasswordHash = crypto
+        .createHash('sha1')
+        .update(password)
+        .digest('hex');
       if (account.password === providedPasswordHash) {
         return account;
       }
