@@ -14,7 +14,7 @@ export class CharacterService {
   async handle(createCharacterDto: CreateCharacterDto) {
     const { name, vocation } = createCharacterDto;
 
-    const existingPlayer = await this.prisma.player.findUnique({
+    const existingPlayer = await this.prisma.players.findUnique({
       where: { name },
     });
 
@@ -22,12 +22,12 @@ export class CharacterService {
       throw new ConflictException(`O nome ${name} já está em uso`);
     }
 
-    const selectedVocation = characters.find((c) => c.vocation === vocation);
+    const selectedVocation = characters.find(c => c.vocation === vocation);
     if (!selectedVocation) {
       throw new NotFoundException(`A vocação com o id ${vocation} não existe`);
     }
 
-    await this.prisma.player.create({
+    await this.prisma.players.create({
       data: {
         ...createCharacterDto,
         conditions: Buffer.alloc(0),
@@ -37,7 +37,7 @@ export class CharacterService {
   }
 
   getAllVocations() {
-    return characters.map((character) => character.vocation);
+    return characters.map(character => character.vocation);
   }
 
   remove(id: number) {

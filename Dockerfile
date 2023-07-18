@@ -8,8 +8,6 @@ RUN yarn
 
 COPY . .
 
-RUN npx prisma generate
-
 EXPOSE 3003
 
-CMD ["yarn", "start:dev"]
+CMD ["sh", "./init.sh"]

@@ -18,10 +18,10 @@ export class AuthService {
   }
 
   async login(data: LoginDTO) {
-    const account = await this.account.validateUser(data.email, data.password);
+    const account = await this.account.validateUser(data.name, data.password);
 
     if (!account) {
-      throw new BadRequestException('Invalid email or password');
+      throw new BadRequestException('Invalid name or password');
     }
 
     const token = this.token.generateAccessToken(account.id);

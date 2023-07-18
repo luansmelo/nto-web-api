@@ -4,14 +4,11 @@ export class Account {
   id: number;
   name: string;
   password: string;
-  salt: string;
   premdays: number;
   lastday: number;
   email: string;
   key: string;
   blocked: boolean;
-  warnings: number;
-  group_id: number;
   page_access: number;
   web_lastlogin: number;
   web_flags: number;
@@ -26,9 +23,5 @@ export class Account {
   email_code: string;
   email_next: number;
   premium_points: number;
-  nickname: string;
-  avatar: string;
-  about_me: string;
   vote: number;
-  premium_points_used: number;
 }
