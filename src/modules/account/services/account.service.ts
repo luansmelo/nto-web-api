@@ -3,7 +3,6 @@ import { PrismaService } from 'src/modules/prisma/services/prisma.service';
 import { AccountDTO } from '../dto/create-account.dto';
 import { LoginDTO } from '../dto/login-account.dto';
 import { UpdateAccountDto } from '../dto/update-account.dto';
-import * as crypto from 'crypto';
 import { Account } from '../entities/account.entity';
 
 @Injectable()
@@ -23,7 +22,7 @@ export class AccountService {
   async handle(data: AccountDTO) {
     await this.checkAccountExistsByNameAndEmail(data.name, data.email);
 
-    const hash = crypto.createHash('sha1').update(data.password).digest('hex');
+    const hash = Buffer.from(data.password).toString('base64');
 
     await this.prisma.account.create({
       data: {
@@ -37,10 +36,7 @@ export class AccountService {
     const account = await this.prisma.account.findUnique({ where: { email } });
 
     if (account) {
-      const providedPasswordHash = crypto
-        .createHash('sha1')
-        .update(password)
-        .digest('hex');
+      const providedPasswordHash = Buffer.from(password, 'base64').toString();
       if (account.password === providedPasswordHash) {
         return account;
       }

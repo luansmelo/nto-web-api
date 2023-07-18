@@ -1,7 +1,6 @@
 export const characters = [
   {
     name: 'Sasuke Sample',
-    world_id: 0,
     group_id: 1,
     account_id: '1',
     vocation: 1,
@@ -9,7 +8,6 @@ export const characters = [
   },
   {
     name: 'Sasuke Sample',
-    world_id: 0,
     group_id: 1,
     account_id: '1',
     vocation: 2,
@@ -17,7 +15,6 @@ export const characters = [
   },
   {
     name: 'Sakura Sample',
-    world_id: 0,
     group_id: 1,
     account_id: '1',
     vocation: 3,
@@ -25,7 +22,6 @@ export const characters = [
   },
   {
     name: 'Madara Sample',
-    world_id: 0,
     group_id: 1,
     account_id: '1',
     vocation: 4,
