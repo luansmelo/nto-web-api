@@ -32,7 +32,7 @@ export class GuildsService {
     });
 
     if (!guild) {
-      return null;
+      throw new NotFoundException('guild not found');
     }
 
     const members = await this.prisma.guild_membership.findMany({
