@@ -5,6 +5,7 @@ import { PrismaModule } from './modules/prisma/prisma.module';
 import { AccountModule } from './modules/account/account.module';
 import { CharacterModule } from './modules/character/character.module';
 import { ConfigModule } from '@nestjs/config';
+import { GuildsModule } from './modules/guilds/guilds.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { ConfigModule } from '@nestjs/config';
     PrismaModule,
     AccountModule,
     CharacterModule,
+    GuildsModule,
   ],
   controllers: [],
   providers: [],
